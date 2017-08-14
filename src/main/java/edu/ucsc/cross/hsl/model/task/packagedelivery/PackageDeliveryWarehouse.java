@@ -81,16 +81,17 @@ public class PackageDeliveryWarehouse extends Component implements HybridSystem
 			PackageDeliveryInstructions newPackage = new PackageDeliveryInstructions(dest,
 			warehouseLocation.getValue());
 			vehicles.add(newPackage);
+			System.out.println(dest.getXPosition() + " " + dest.getYPosition() + " " + dest.getZPosition());
 		}
 		return vehicles;
 	}
 
 	public PositionData generateNewDestination()
 	{
-		Double x = (Math.random() * deliveryParams.xDeliveryRange.getValue()
-		* Math.signum(0 - Math.round(Math.random()))) + warehouseLocation.getValue().getXPosition();
-		Double y = (Math.random() * deliveryParams.yDeliveryRange.getValue()
-		* Math.signum(0 - Math.round(Math.random()))) + warehouseLocation.getValue().getYPosition();
+		Double x = (Math.random() * deliveryParams.xDeliveryRange.getValue() * Math.signum(.5 - Math.random()))
+		+ warehouseLocation.getValue().getXPosition();
+		Double y = (Math.random() * deliveryParams.yDeliveryRange.getValue() * Math.signum(.5 - Math.random()))
+		+ warehouseLocation.getValue().getYPosition();
 		return new PositionData(x, y, 0.0);
 	}
 
@@ -105,8 +106,12 @@ public class PackageDeliveryWarehouse extends Component implements HybridSystem
 			{
 				if (packagesToDeliver())
 				{
-					veh.taskStatus.setValue(packagesToDeliver.get(i));
-					packagesToDeliver.remove(i++);
+					System.out
+					.println("Assigning " + packagesToDeliver.get(i).deliveryDestination.getValue().getXPosition() + " "
+					+ packagesToDeliver.get(i).deliveryDestination.getValue().getYPosition() + " "
+					+ packagesToDeliver.get(i).deliveryDestination.getValue().getZPosition());
+					veh.loadInstructions(ObjectCloner.cloner.deepClone(packagesToDeliver.get(i)));
+					packagesToDeliver.remove(i);
 				}
 			}
 		}
