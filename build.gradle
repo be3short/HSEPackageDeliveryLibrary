@@ -28,6 +28,7 @@ dependencies {
 	compile 'org.slf4j:slf4j-api:1.7.21'
  	testCompile 'junit:junit:4.12'
    	compile 'com.github.be3short:HybridSystemsEnvironment:v1.0.0'
+   	compile 'com.github.be3short:HybridSystemsEnvironmentApplication:-SNAPSHOT'
    	compile 'com.github.be3short:HSEVehicleLibrary:-SNAPSHOT'
    	//compile 'com.github.be3short:HSEPositionLibrary:-SNAPSHOT'
    	
