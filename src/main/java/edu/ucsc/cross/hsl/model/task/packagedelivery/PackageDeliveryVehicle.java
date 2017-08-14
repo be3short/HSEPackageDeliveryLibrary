@@ -6,7 +6,6 @@ import edu.ucsc.cross.hse.core.framework.models.HybridSystem;
 import edu.ucsc.cross.hse.model.electronics.basic.ConnectedStorageController;
 import edu.ucsc.cross.hse.model.electronics.basic.StorageState;
 import edu.ucsc.cross.hse.model.electronics.basic.StorageSystem;
-import edu.ucsc.cross.hse.model.position.general.Position;
 import edu.ucsc.cross.hse.model.position.general.PositionStateData;
 import edu.ucsc.cross.hse.model.vehicle.general.Vehicle;
 import edu.ucsc.cross.hse.model.vehicle.navigation.DestinationControl;
@@ -63,10 +62,8 @@ public class PackageDeliveryVehicle extends Component implements HybridSystem
 			if (deliveryInstructionsReceived())
 			{
 				vehicleMode.setValue(PackageDeliveryVehicleMode.DELIVERING);
-				vehicle.getVehicleController().updateDestination(taskStatus.getValue().deliveryDestination.getValue());
+				vehicle.getVehicleController().updateDestination(taskStatus.getValue().deliveryDestination);
 			}
-			System.out.println("hwew");
-			System.exit(1);
 			break;
 		}
 		case DELIVERING:
@@ -75,7 +72,7 @@ public class PackageDeliveryVehicle extends Component implements HybridSystem
 			.getValue())
 			{
 				vehicleMode.setValue(PackageDeliveryVehicleMode.RETURNING);
-				vehicle.getVehicleController().updateDestination(taskStatus.getValue().returnDestination.getValue());
+				vehicle.getVehicleController().updateDestination(taskStatus.getValue().returnDestination);
 				System.out.println("returning");
 			}
 			break;
@@ -99,14 +96,14 @@ public class PackageDeliveryVehicle extends Component implements HybridSystem
 	{
 		vehicleMode.setValue(PackageDeliveryVehicleMode.DELIVERING);
 		taskStatus.setValue(instructions);
-		vehicle.getVehicleController().updateDestination(taskStatus.getValue().deliveryDestination.getValue());
+		vehicle.getVehicleController().updateDestination(taskStatus.getValue().deliveryDestination);
 	}
 
 	@Override
 	public boolean flowSet()
 	{
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

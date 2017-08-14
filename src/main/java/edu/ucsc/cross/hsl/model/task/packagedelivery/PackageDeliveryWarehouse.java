@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class PackageDeliveryWarehouse extends Component implements HybridSystem
 {
 
-	public Data<Position> warehouseLocation;
+	public Data<PositionData> warehouseLocation;
 	public NetworkSystem<Position> localNetwork;
 	public HashMap<Data<PackageDeliveryVehicleMode>, PackageDeliveryVehicle> vehicleFleet;
 	public PackageDeliveryParameters deliveryParams;
@@ -55,7 +55,7 @@ public class PackageDeliveryWarehouse extends Component implements HybridSystem
 		this.vehicleFleet = fleet;
 		this.deliveryParams = delivery_params;
 		this.packagesToDeliver = packages;
-		warehouseLocation = new Data<Position>("Warehouse Location", new PositionData(0.0, 0.0, 0.0));
+		warehouseLocation = new Data<PositionData>("Warehouse Location", new PositionData(0.0, 0.0, 0.0));
 		vehicleConfig = new PackageDeliveryVehicle();
 		vehicleQuantity = new Data<Integer>("Fleet Size", 0);
 	}
@@ -77,7 +77,7 @@ public class PackageDeliveryWarehouse extends Component implements HybridSystem
 		ArrayList<PackageDeliveryInstructions> vehicles = new ArrayList<PackageDeliveryInstructions>();
 		for (Integer i = 0; i < deliveryParams.numberOfPackagesToDeliver.getValue(); i++)
 		{
-			Position dest = generateNewDestination();
+			PositionData dest = generateNewDestination();
 			PackageDeliveryInstructions newPackage = new PackageDeliveryInstructions(dest,
 			warehouseLocation.getValue());
 			vehicles.add(newPackage);
@@ -106,10 +106,9 @@ public class PackageDeliveryWarehouse extends Component implements HybridSystem
 			{
 				if (packagesToDeliver())
 				{
-					System.out
-					.println("Assigning " + packagesToDeliver.get(i).deliveryDestination.getValue().getXPosition() + " "
-					+ packagesToDeliver.get(i).deliveryDestination.getValue().getYPosition() + " "
-					+ packagesToDeliver.get(i).deliveryDestination.getValue().getZPosition());
+					System.out.println("Assigning " + packagesToDeliver.get(i).deliveryDestination.getXPosition() + " "
+					+ packagesToDeliver.get(i).deliveryDestination.getYPosition() + " "
+					+ packagesToDeliver.get(i).deliveryDestination.getZPosition());
 					veh.loadInstructions(ObjectCloner.cloner.deepClone(packagesToDeliver.get(i)));
 					packagesToDeliver.remove(i);
 				}
